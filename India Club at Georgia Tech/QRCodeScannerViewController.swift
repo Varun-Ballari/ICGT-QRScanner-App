@@ -1,4 +1,4 @@
-//
+
 //  QRCodeScannerViewController.swift
 //  India Club at Georgia Tech
 //
@@ -9,13 +9,12 @@
 import UIKit
 import AVFoundation
 import AudioToolbox.AudioServices
+import Alamofire
+import SwiftyJSON
 
 
 class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
-    
-    @IBOutlet var messageLabel:UILabel!
-    @IBOutlet var topbar: UIView!
-    
+
     var qrResult: String!
     
     var captureSession: AVCaptureSession?
@@ -58,8 +57,8 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
             view.layer.addSublayer(videoPreviewLayer!)
             
             captureSession?.startRunning()
-            view.bringSubview(toFront: messageLabel)
-            view.bringSubview(toFront: topbar)
+//            view.bringSubview(toFront: messageLabel)
+//            view.bringSubview(toFront: topbar)
             qrCodeFrameView = UIView()
             
             if let qrCodeFrameView = qrCodeFrameView {
@@ -93,7 +92,7 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRect.zero
-            messageLabel.text = "No QR/barcode is detected"
+//            messageLabel.text = "No QR/barcode is detected"
             return
         }
         
@@ -108,16 +107,65 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
             if metadataObj.stringValue != nil {
                 qrResult = metadataObj.stringValue
                 
+                print(qrResult)
                 captureSession?.stopRunning()
-                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-                AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
-                self.performSegue(withIdentifier: "found", sender: self)
+                
+                checkDB(query: metadataObj.stringValue)
+                
+//                self.performSegue(withIdentifier: "found", sender: qrResult)
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextScene = segue.destination as? FoundViewController
-        nextScene?.qrValuePassedOn = qrResult
+        if segue.identifier == "found" {
+            let nextScene = segue.destination as! UINavigationController
+            let nextVC = nextScene.viewControllers[0] as! FoundViewController
+            nextVC.qrValuePassedOn = sender as! String
+        } else {
+            let nextScene = segue.destination.navigationController?.viewControllers[0] as! ViewController
+
+        }
+        
+    }
+    
+    func checkDB(query: String!) {
+//        print(query)
+        var icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/ios/search?query=" + query
+        Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
+//            print(response.request)  // original URL request
+//            print(response.response) // HTTP URL response
+//            print(response.data)     // server data
+//            print(response.result)   // result of response serialization
+            
+            if let jsondata = response.result.value {
+                let json = JSON(jsondata)
+
+//                print("JSON: \(json)")
+                
+                if json[0]["sucess"] == true {
+                    self.performSegue(withIdentifier: "found", sender: self)
+                } else {
+                    self.performSegue(withIdentifier: "notfound", sender: self)
+                }
+                
+//                for item in json[0]["checkinby"].arrayValue {
+//                    if (item == null) {
+//                        self.performSegue(withIdentifier: "found", sender: self)
+//                    } else {
+//                        self.performSegue(withIdentifier: "found", sender: self)
+//                    }
+//                }
+//
+//                if let checkinby = Array(json["checkinby"]) {
+//                    
+//                }
+            }
+            
+//            if JSON["error"]
+        }
+        
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
     }
 }
