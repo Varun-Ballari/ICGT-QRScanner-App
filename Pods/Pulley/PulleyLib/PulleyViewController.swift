@@ -406,6 +406,10 @@ open class PulleyViewController: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.moveUp), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.qrScan), name: NSNotification.Name(rawValue: "Detected Code"), object: nil)
+        
         // IB Support
         if primaryContentViewController == nil || drawerContentViewController == nil
         {
@@ -431,6 +435,17 @@ open class PulleyViewController: UIViewController {
         setDrawerPosition(position: initialDrawerPosition, animated: false)
         
         scrollViewDidScroll(drawerScrollView)
+    }
+    
+    
+    func moveUp() {
+        setDrawerPosition(position: .open, animated: true)
+    }
+    
+    func qrScan() {
+//        print("in qr scan")
+        setDrawerPosition(position: .open, animated: true)
+
     }
     
     override open func viewDidAppear(_ animated: Bool) {
@@ -533,12 +548,16 @@ open class PulleyViewController: UIViewController {
             
         case .collapsed:
             stopToMoveTo = collapsedHeight
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Start Camera"), object: nil)
+
             
         case .partiallyRevealed:
             stopToMoveTo = partialRevealHeight
             
         case .open:
             stopToMoveTo = (self.view.bounds.size.height - topInset)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Stop Camera"), object: nil)
+
             
         case .closed:
             stopToMoveTo = 0

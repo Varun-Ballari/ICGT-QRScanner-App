@@ -33,6 +33,12 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.startCamera), name: NSNotification.Name(rawValue: "Start Camera"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.stopCamera), name: NSNotification.Name(rawValue: "Stop Camera"), object: nil)
+        
+        
         let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
         
         do {
@@ -110,7 +116,9 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
                 print(qrResult)
                 captureSession?.stopRunning()
                 
-                checkDB(query: metadataObj.stringValue)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Detected Code"), object: nil)
+                
+//                checkDB(query: metadataObj.stringValue)
                 
 //                self.performSegue(withIdentifier: "found", sender: qrResult)
             }
@@ -167,5 +175,14 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
         
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
+    }
+    
+    
+    func startCamera() {
+        captureSession?.startRunning()
+    }
+    
+    func stopCamera() {
+        captureSession?.stopRunning()
     }
 }

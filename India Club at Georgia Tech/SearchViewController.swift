@@ -165,6 +165,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true
         searchBar.showsCancelButton = true
+        
+        searchBar.becomeFirstResponder()
+        
+        print("here")
+        
+//        UIView.animate(withDuration: 0.2, animations: {
+////            self.view.frame.origin.y = 0
+////            self.view.frame = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y - 200, width: self.view.frame.size.width, height: self.view.frame.size.height);
+//
+//        })
+        
+        
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -191,12 +203,12 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        self.searchbar.resignFirstResponder()
-//    }
-//    
-//    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        self.searchbar.resignFirstResponder()
-//
-//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.searchbar.resignFirstResponder()
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.searchbar.resignFirstResponder()
+
+    }
 }
