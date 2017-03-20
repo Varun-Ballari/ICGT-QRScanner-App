@@ -15,6 +15,9 @@ import SwiftyJSON
 
 class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
 
+    @IBOutlet var qrSymbol: UIView!
+    @IBOutlet var text: UILabel!
+    
     var qrResult: String!
     
     var captureSession: AVCaptureSession?
@@ -62,13 +65,14 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
             videoPreviewLayer?.frame = view.layer.bounds
             view.layer.addSublayer(videoPreviewLayer!)
             
+            self.view.bringSubview(toFront: qrSymbol)
+            self.view.bringSubview(toFront: text)
+            
             captureSession?.startRunning()
-//            view.bringSubview(toFront: messageLabel)
-//            view.bringSubview(toFront: topbar)
             qrCodeFrameView = UIView()
             
             if let qrCodeFrameView = qrCodeFrameView {
-                qrCodeFrameView.layer.borderColor = UIColor.green.cgColor
+                qrCodeFrameView.layer.borderColor = UIColor.init(rgb: 0xFBFBFB, alpha: 1.0).cgColor
                 qrCodeFrameView.layer.borderWidth = 2
                 view.addSubview(qrCodeFrameView)
                 view.bringSubview(toFront: qrCodeFrameView)
@@ -115,68 +119,12 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
                 
                 print(qrResult)
                 captureSession?.stopRunning()
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Detected Code"), object: nil)
-                
-//                checkDB(query: metadataObj.stringValue)
-                
-//                self.performSegue(withIdentifier: "found", sender: qrResult)
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Detected Code"), object: nil, userInfo: ["qrResult":qrResult])
             }
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "found" {
-            let nextScene = segue.destination as! UINavigationController
-            let nextVC = nextScene.viewControllers[0] as! FoundViewController
-            nextVC.qrValuePassedOn = sender as! String
-        } else {
-            let nextScene = segue.destination.navigationController?.viewControllers[0] as! ViewController
-
-        }
-        
-    }
-    
-    func checkDB(query: String!) {
-//        print(query)
-        var icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/ios/search?query=" + query
-        Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
-//            print(response.request)  // original URL request
-//            print(response.response) // HTTP URL response
-//            print(response.data)     // server data
-//            print(response.result)   // result of response serialization
-            
-            if let jsondata = response.result.value {
-                let json = JSON(jsondata)
-
-//                print("JSON: \(json)")
-                
-                if json[0]["sucess"] == true {
-                    self.performSegue(withIdentifier: "found", sender: self)
-                } else {
-                    self.performSegue(withIdentifier: "notfound", sender: self)
-                }
-                
-//                for item in json[0]["checkinby"].arrayValue {
-//                    if (item == null) {
-//                        self.performSegue(withIdentifier: "found", sender: self)
-//                    } else {
-//                        self.performSegue(withIdentifier: "found", sender: self)
-//                    }
-//                }
-//
-//                if let checkinby = Array(json["checkinby"]) {
-//                    
-//                }
-            }
-            
-//            if JSON["error"]
-        }
-        
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
-    }
-    
     
     func startCamera() {
         captureSession?.startRunning()

@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ICGT Scanner.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,17 +42,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>164099316E07BFD69A983C379682BC0C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>528795DB6FF4D10822F66C3DAE720915</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>58D7DE75365EAA7D76FBA0DF4462929A</key>
+		<key>1726BA5E782DBA737EDCFD875A25B34C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -58,6 +53,21 @@
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A6ACDD14C447A147482E4BE37BE9F102</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BA50D0311D0907AF2D35EBDBC956CA4E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C1A7392BAC3ACD74C48EDF792A268A44</key>
 		<dict>
 			<key>primary</key>
 			<true/>

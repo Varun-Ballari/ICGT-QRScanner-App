@@ -11,7 +11,7 @@ import AVFoundation
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
     @IBOutlet var one: UIView!
     @IBOutlet var two: UIView!
     @IBOutlet var three: UIView!

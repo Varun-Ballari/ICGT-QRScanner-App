@@ -9,6 +9,7 @@ target 'ICGT Scanner' do
   pod 'SwiftyJSON'
   pod 'Alamofire'
   pod 'Pulley'
+  pod 'Pager'
 
 
   target 'ICGT ScannerTests' do

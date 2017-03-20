@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "58D7DE75365EAA7D76FBA0DF4462929A"
+               BlueprintIdentifier = "BA50D0311D0907AF2D35EBDBC956CA4E"
                BuildableName = "Pods_ICGT_Scanner.framework"
                BlueprintName = "Pods-ICGT Scanner"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "58D7DE75365EAA7D76FBA0DF4462929A"
+            BlueprintIdentifier = "BA50D0311D0907AF2D35EBDBC956CA4E"
             BuildableName = "Pods_ICGT_Scanner.framework"
             BlueprintName = "Pods-ICGT Scanner"
             ReferencedContainer = "container:Pods.xcodeproj">

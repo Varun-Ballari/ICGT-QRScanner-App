@@ -13,16 +13,9 @@ import SwiftyJSON
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate {
     
     @IBOutlet var table: UITableView!
-    
     @IBOutlet var searchbar: UISearchBar!
     
-    var timer = Timer()
-
-    var statsTable = [["0", "0"]]
     var matchTable = [["Varun Ballari", "902993193", "ICGT Memeber", "hi"]]
-    
-    var searchActive: Bool = false
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +23,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         table.delegate = self
         table.dataSource = self
         searchbar.delegate = self
-
-        getCounts()
-//        scheduledTimerWithTimeInterval()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,136 +60,53 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     
-    func getCounts() {
-        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/ios/counts"
-        Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
-            if let jsondata = response.result.value {
-                let json = JSON(jsondata)
-
-                if json[0]["success"] == true {
-                    
-                    self.statsTable.removeAll()
-                    for i in 0..<json[0]["counts"].count {
-                        let counts = json[0]["counts"][i]
-                        let checkins = json[0]["checkins"][i]
-                        self.statsTable.append([String(describing: counts), String(describing: checkins)])
-                    }
-                }
-            }
-            self.table.reloadData()
-        }
-    }
-    
-    func scheduledTimerWithTimeInterval(){
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.getCounts), userInfo: nil, repeats: true)
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if section == 0 {
-            if (searchActive) {
-                return self.matchTable.count
-            }
-            else {
-                return self.statsTable.count
-            }
-        } else {
-            return 1
-        }
-        
+        return self.matchTable.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if indexPath.section == 0 {
-            if (searchActive) {
-                //            print("searching")
-                let cell = tableView.dequeueReusableCell(withIdentifier: "searching", for: indexPath) as! Match_TableViewCell
-                cell.ticketid.text = self.matchTable[indexPath.row][0]
-                cell.name.text = self.matchTable[indexPath.row][1]
-                cell.gtid.text = self.matchTable[indexPath.row][2]
-                return cell
-                
-            } else {
-                //            print("not searching")
-                
-                let cell = tableView.dequeueReusableCell(withIdentifier: "stats", for: indexPath) as! Counts_TableViewCell
-                cell.registered.text = self.statsTable[indexPath.row][0]
-                cell.checkedIn.text = self.statsTable[indexPath.row][1]
-                return cell
-            }
 
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "copyright", for: indexPath)
-            return cell
-        }
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "searching", for: indexPath) as! Match_TableViewCell
+        cell.ticketid.text = self.matchTable[indexPath.row][0]
+        cell.name.text = self.matchTable[indexPath.row][1]
+        cell.gtid.text = self.matchTable[indexPath.row][2]
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            if (searchActive) {
-                return 115
-            } else {
-                return 150
-            }
-        } else {
-            return 115
-        }
+        return 84
     }
     
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchActive = true
         getMatches(searchString: searchText)
         
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchActive = true
         searchBar.showsCancelButton = true
-        
         searchBar.becomeFirstResponder()
-        
-        print("here")
-        
-//        UIView.animate(withDuration: 0.2, animations: {
-////            self.view.frame.origin.y = 0
-////            self.view.frame = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.y - 200, width: self.view.frame.size.width, height: self.view.frame.size.height);
-//
-//        })
-        
-        
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-//        searchActive = false
-//        searchbar.text = ""
         searchBar.showsCancelButton = true
-
         searchBar.resignFirstResponder()
-
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = false
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
-        getCounts()
-
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchActive = true
-//        getMatches(searchString: searchBar.text!)
-        searchBar.resignFirstResponder()
+        self.searchbar.resignFirstResponder()
 
     }
     
