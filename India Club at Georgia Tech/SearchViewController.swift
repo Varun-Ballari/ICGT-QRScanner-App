@@ -69,6 +69,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Detected Code"), object: nil, userInfo: ["qrResult" : self.matchTable[indexPath.row][0]])
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

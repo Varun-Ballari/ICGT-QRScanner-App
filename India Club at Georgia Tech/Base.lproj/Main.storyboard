@@ -14,7 +14,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="ICGT_Scanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginVC" id="BYZ-38-t0r" customClass="LoginViewController" customModule="ICGT_Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -612,7 +612,7 @@
         <!--Name View Controller-->
         <scene sceneID="EkN-1m-M68">
             <objects>
-                <viewController id="QNS-Ku-uZ3" customClass="NameViewController" customModule="ICGT_Scanner" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="nameVC" id="QNS-Ku-uZ3" customClass="NameViewController" customModule="ICGT_Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="A9G-8T-gQc"/>
                         <viewControllerLayoutGuide type="bottom" id="ilg-9C-xTz"/>
@@ -675,6 +675,9 @@
                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="QNS-Ku-uZ3" id="2gB-cz-Isr"/>
+                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5025165264" colorSpace="custom" customColorSpace="sRGB"/>
@@ -699,7 +702,6 @@
                                     <constraint firstItem="suJ-Qc-iDk" firstAttribute="centerX" secondItem="xCc-6X-g1L" secondAttribute="centerX" id="7Pz-qg-Sa7"/>
                                     <constraint firstItem="xCc-6X-g1L" firstAttribute="centerX" secondItem="Ywh-5C-Uan" secondAttribute="centerX" id="T4P-zo-KeA"/>
                                     <constraint firstItem="xCc-6X-g1L" firstAttribute="top" secondItem="bAw-Mj-saW" secondAttribute="bottom" constant="25" id="acm-DE-xMg"/>
-                                    <constraint firstItem="bAw-Mj-saW" firstAttribute="top" secondItem="Ywh-5C-Uan" secondAttribute="top" constant="99" id="dQ8-Oh-idt"/>
                                     <constraint firstItem="bAw-Mj-saW" firstAttribute="centerX" secondItem="Ywh-5C-Uan" secondAttribute="centerX" id="eMp-H0-Ejb"/>
                                     <constraint firstItem="xCc-6X-g1L" firstAttribute="leading" secondItem="Ywh-5C-Uan" secondAttribute="leading" constant="8" id="fhF-7N-L6n"/>
                                     <constraint firstItem="suJ-Qc-iDk" firstAttribute="top" secondItem="xCc-6X-g1L" secondAttribute="bottom" constant="5" id="sko-qa-1VA"/>
@@ -722,7 +724,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="name" destination="E4O-9m-e1r" id="PBy-6P-FOf"/>
+                        <outlet property="name" destination="E4O-9m-e1r" id="csw-rP-B99"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="gotokey" id="Vlv-sD-C8x"/>
                     </connections>
                 </viewController>
@@ -1155,7 +1157,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jK0-30-HFA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="690" y="2197"/>
+            <point key="canvasLocation" x="690" y="2214"/>
         </scene>
         <!--Found View Controller-->
         <scene sceneID="XAn-b8-2Y6">
@@ -1179,7 +1181,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.96865051980000005" green="0.96489530800000001" blue="0.95637696979999998" alpha="0.4989858774" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.96865051980000005" green="0.96489530800000001" blue="0.95637696979999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="fKK-1q-EZE" secondAttribute="trailing" id="Rf8-17-hZ1"/>
                                     <constraint firstAttribute="bottom" secondItem="fKK-1q-EZE" secondAttribute="bottom" id="Rtv-rw-XUD"/>
@@ -1400,12 +1402,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="checkinby_label" destination="fKK-1q-EZE" id="Xqp-ov-R9I"/>
                         <outlet property="table" destination="sdx-2v-HEP" id="HB2-rz-0DV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIE-Iu-ATN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2284" y="2214"/>
+            <point key="canvasLocation" x="2284" y="2213"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="OzU-h7-5aC">

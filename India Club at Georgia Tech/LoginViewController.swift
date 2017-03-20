@@ -52,17 +52,13 @@ class LoginViewController: UIViewController {
     var numNums: Int = 0
     var secretKey: String = ""
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        
-        // start scan
     }
     
     override func viewDidLayoutSubviews() {
@@ -72,7 +68,7 @@ class LoginViewController: UIViewController {
 
         for item in arr {
 //            item.layer.cornerRadius = item.frame.size.width / 2
-            item.clipsToBounds = true
+//            item.clipsToBounds = true
 //            item.layer.borderColor = UIColor.white.cgColor
 //            item.layer.borderWidth = 1.0
         }
@@ -80,10 +76,7 @@ class LoginViewController: UIViewController {
         hiddenArr = [dot1, dot2, dot3, dot4, dot5, dot6]
         
         for item in hiddenArr {
-            item.layer.cornerRadius = 5 //item.frame.size.width / 2
-            item.clipsToBounds = true
-//            item.layer.borderColor = UIColor.white.cgColor
-//            item.layer.borderWidth = 1.0
+            item.layer.cornerRadius = 5
         }
         
         
@@ -125,7 +118,6 @@ class LoginViewController: UIViewController {
             }
             
             secretKey = secretKey + String(sender.tag)
-//            hiddenArr[numNums].backgroundColor = UIColor.white
             labelArr[numNums].text = String(describing: sender.tag)
             if (numNums != 0) {
                labelArr[numNums - 1].text = "*"
@@ -136,8 +128,6 @@ class LoginViewController: UIViewController {
         
         
         if numNums == 6 {
-            
-//            print(secretKey)
             let icgtsearchurl: String = "https://tickets.gtindiaclub.com//api/ios/validate?key=" + secretKey
             
             Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in

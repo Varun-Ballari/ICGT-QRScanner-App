@@ -9,10 +9,11 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import CoreData
 
 class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var name = ""
+    var attendeeName = ""
 
     var ticketDataTypes = ["Ticket ID", "GTID", "Status", "Group"]
     var ticketData = ["", "", "", ""]
@@ -25,16 +26,28 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var found : Bool = true
     
-    
-    
     @IBOutlet var table: UITableView!
     
+    var user = [User]()
+    
+    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+    @IBOutlet var checkinby_label: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkDB(notification:)), name: NSNotification.Name(rawValue: "Detected Code"), object: nil)
+        
+        let fetchRequest:  NSFetchRequest<User> = User.fetchRequest()
+        
+        do {
+            user = try managedContext.fetch(fetchRequest)
+            checkinby_label.text = "Check in by " + String(describing: user[0].name!)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,7 +86,7 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
         if found {
             if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "attendee", for: indexPath) as! Attendee_TableViewCell
-                cell.name.text = self.name
+                cell.name.text = self.attendeeName
                 return cell
                 
             } else if indexPath.section == 1 {
@@ -118,45 +131,65 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     func checkDB(notification: Notification) {
-        
         guard let query = notification.userInfo!["qrResult"] else { return }
         
         print(query)
         
-        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/ios/search?query=" + (query as! String)
+        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/search?query=" + (query as! String)
         Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
-            //            print(response.request)  // original URL request
-            //            print(response.response) // HTTP URL response
-            //            print(response.data)     // server data
-            //            print(response.result)   // result of response serialization
-            
             if let jsondata = response.result.value {
                 let json = JSON(jsondata)
                 
-                // print("JSON: \(json)")
                 
                 if json[0]["sucess"] == true {
                     self.found = true
+                    self.attendeeName = String(describing: json[0]["name"])
+                    
+                    self.ticketData[0] = String(describing: json[0]["ticketid"])
+                    
+//                    if (json[0]["gtid"] == nil) {
+//                        status = "Non-Member/Guest"
+//                    }
+                    self.ticketData[1] = String(describing: json[0]["gtid"])
+                    self.ticketData[3] = String(describing: json[0]["groupNum"])
+
+//                    self.checkinData = json[0]["checkinby"]
+//                    self.comingTo = json[0]["comingto"]
+                
                 } else {
                     self.found = false
                 }
                 
-//                self.table.reloadData()
-                for item in json[0]["checkinby"].arrayValue {
-//                    if (item == NSNull) {
-//                        self.performSegue(withIdentifier: "found", sender: self)
-//                    } else {
-//                        self.performSegue(withIdentifier: "found", sender: self)
-//                    }
-                }
-                
-//                if let checkinby = Array(json["checkinby"]) {
-//            
-//                }
+                self.table.reloadData()
             }
-            
-//            if JSON["error"]
         }
     }
+    
+    
+    func postRequest() {
+        
+        let icgtposturl: String = "https://tickets.gtindiaclub.com/api/checkin/search?query="
 
+        
+        let params: Parameters = [
+            "stripeToken": "token_id",
+            "name": "cnoon",
+            "email": "cnoon@alamofire.org"
+        ]
+        
+        Alamofire.request(icgtposturl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: nil)
+            .responseJSON { response in
+                print(response.request as Any)  // original URL request
+                print(response.response as Any) // URL response
+                print(response.result.value as Any)   // result of response serialization
+        }
+    }
+    
+    
 }
+
+
+//            print(response.request)  // original URL request
+//            print(response.response) // HTTP URL response
+//            print(response.data)     // server data
+//            print(response.result)   // result of response serialization
