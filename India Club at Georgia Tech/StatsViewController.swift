@@ -9,16 +9,36 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import CoreData
 
 class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var table: UITableView!
     var statsTable = [["0", "0"]]
+    var selfStats = ["0"]
+    var subevents = ["0"]
+    
+    @IBOutlet var eventName: UILabel!
+    
     var timer = Timer()
+
+    var user = [User]()
+    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let fetchRequest:  NSFetchRequest<User> = User.fetchRequest()
+        
+        do {
+            user = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+
         
         table.delegate = self
         table.dataSource = self
@@ -34,18 +54,26 @@ class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func getCounts() {
-        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/ios/counts"
+        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/counts?user=" + String(describing: user[0].name!)
         Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
             if let jsondata = response.result.value {
                 let json = JSON(jsondata)
                 
-                if json[0]["success"] == true {
+                if json["success"] == true {
                     
                     self.statsTable.removeAll()
-                    for i in 0..<json[0]["counts"].count {
-                        let counts = json[0]["counts"][i]
-                        let checkins = json[0]["checkins"][i]
-                        self.statsTable.append([String(describing: counts), String(describing: checkins)])
+                    self.selfStats.removeAll()
+                    self.subevents.removeAll()
+                    
+                    self.eventName.text = String(describing: json["eventName"])
+                    
+                    
+                    for i in 0..<json["subevents"].count {
+
+                        self.statsTable.append([String(describing: json["counts"][i]), String(describing: json["checkins"][i])])
+                        self.selfStats.append(String(describing: json["userStats"][i]))
+                        self.subevents.append(String(describing: json["subevents"][i]))
+
                     }
                 }
             }
@@ -65,6 +93,8 @@ class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         if section == 0 {
             return self.statsTable.count
+        } else if section == 1 {
+            return self.statsTable.count
         } else {
             return 1
         }
@@ -81,10 +111,15 @@ class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let cell = tableView.dequeueReusableCell(withIdentifier: "stats", for: indexPath) as! Counts_TableViewCell
             cell.registered.text = self.statsTable[indexPath.row][0]
             cell.checkedIn.text = self.statsTable[indexPath.row][1]
+            cell.eventName.text = self.subevents[indexPath.row] as? String
             return cell
             
         } else if indexPath.section == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "selfstats", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "selfstats", for: indexPath) as! SelfStat_TableViewCell
+            cell.count.text = self.selfStats[indexPath.row] as? String
+            
+            var string: String = self.subevents[indexPath.row] as! String
+            cell.label.text = "Your " + string + " Checkin Count"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "copyright", for: indexPath)

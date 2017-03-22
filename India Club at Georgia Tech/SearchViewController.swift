@@ -15,7 +15,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet var table: UITableView!
     @IBOutlet var searchbar: UISearchBar!
     
-    var matchTable = [["Varun Ballari", "902993193", "ICGT Memeber", "hi"]]
+    var matchTable = [["", "", ""]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,20 +37,15 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let json = JSON(jsondata)
 //                print(json)
                 
-                //                if json[0]["success"] == true {
-                
                 self.matchTable.removeAll()
-                for i in 0..<json[0].count {
-//                    let checkins = json[i]["checkinby"]
-//                    let comingto = json[i]["comingto"]
-//                    let groupNum = json[i]["groupNum"]
+                for i in 0..<json.count {
                     let gtid = json[i]["gtid"]
                     let name = json[i]["name"]
                     let ticketid = json[i]["ticketid"]
                     
                     
                     self.matchTable.append([String(describing: ticketid), String(describing: name), String(describing: gtid)])
-//                    print(self.matchTable)
+                    print(self.matchTable)
                     
                 }
             }
@@ -70,6 +65,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Detected Code"), object: nil, userInfo: ["qrResult" : self.matchTable[indexPath.row][0]])
+//        print(self.matchTable[indexPath.row][0])
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

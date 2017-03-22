@@ -128,13 +128,13 @@ class LoginViewController: UIViewController {
         
         
         if numNums == 6 {
-            let icgtsearchurl: String = "https://tickets.gtindiaclub.com//api/ios/validate?key=" + secretKey
+            let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/ios?key=" + secretKey
             
             Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
                 if let jsondata = response.result.value {
                     let json = JSON(jsondata)
                     
-                    if json[0]["success"] == true {
+                    if json["success"] == true {
                         self.performSegue(withIdentifier: "gotoscan", sender: self)
                     } else {
                         self.numNums = 0

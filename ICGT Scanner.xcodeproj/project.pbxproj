@@ -32,9 +32,9 @@
 		9A6F62E21E7F9F8B00276684 /* Attendee_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6F62E11E7F9F8B00276684 /* Attendee_TableViewCell.swift */; };
 		9A6F62E41E7F9FD200276684 /* Details_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6F62E31E7F9FD200276684 /* Details_TableViewCell.swift */; };
 		9A6F62E61E7FA1D600276684 /* Button_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6F62E51E7FA1D600276684 /* Button_TableViewCell.swift */; };
-		9A6F62E81E7FAD0600276684 /* Checkin_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6F62E71E7FAD0600276684 /* Checkin_TableViewCell.swift */; };
 		9ABB371E1E663CD50077E951 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABB371D1E663CD50077E951 /* SearchViewController.swift */; };
 		9AC3020C1E7B89F600F26E1D /* Counts_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC3020B1E7B89F600F26E1D /* Counts_TableViewCell.swift */; };
+		9AD325491E80A78300F289EA /* SelfStat_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD325481E80A78300F289EA /* SelfStat_TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,9 +87,9 @@
 		9A6F62E11E7F9F8B00276684 /* Attendee_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendee_TableViewCell.swift; sourceTree = "<group>"; };
 		9A6F62E31E7F9FD200276684 /* Details_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Details_TableViewCell.swift; sourceTree = "<group>"; };
 		9A6F62E51E7FA1D600276684 /* Button_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button_TableViewCell.swift; sourceTree = "<group>"; };
-		9A6F62E71E7FAD0600276684 /* Checkin_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Checkin_TableViewCell.swift; sourceTree = "<group>"; };
 		9ABB371D1E663CD50077E951 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		9AC3020B1E7B89F600F26E1D /* Counts_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Counts_TableViewCell.swift; sourceTree = "<group>"; };
+		9AD325481E80A78300F289EA /* SelfStat_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfStat_TableViewCell.swift; sourceTree = "<group>"; };
 		ADD97D9299E499A050E500A5 /* Pods-ICGT ScannerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ICGT ScannerUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ICGT ScannerUITests/Pods-ICGT ScannerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB475F24AA8452F8C2BE720C /* Pods-ICGT Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ICGT Scanner.release.xcconfig"; path = "Pods/Target Support Files/Pods-ICGT Scanner/Pods-ICGT Scanner.release.xcconfig"; sourceTree = "<group>"; };
 		CA6C5D738B650DB49D13C6A2 /* Pods-ICGT ScannerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ICGT ScannerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ICGT ScannerTests/Pods-ICGT ScannerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -200,9 +200,9 @@
 			children = (
 				9A5FB7D01E7C7F790021B7D5 /* Match_TableViewCell.swift */,
 				9AC3020B1E7B89F600F26E1D /* Counts_TableViewCell.swift */,
+				9AD325481E80A78300F289EA /* SelfStat_TableViewCell.swift */,
 				9A6F62E11E7F9F8B00276684 /* Attendee_TableViewCell.swift */,
 				9A6F62E31E7F9FD200276684 /* Details_TableViewCell.swift */,
-				9A6F62E71E7FAD0600276684 /* Checkin_TableViewCell.swift */,
 				9A6F62E51E7FA1D600276684 /* Button_TableViewCell.swift */,
 			);
 			name = "TableView Cells";
@@ -519,6 +519,7 @@
 				9A26A41C1E6514E4003E5C95 /* URLStruct.swift in Sources */,
 				9ABB371E1E663CD50077E951 /* SearchViewController.swift in Sources */,
 				9A6F62E61E7FA1D600276684 /* Button_TableViewCell.swift in Sources */,
+				9AD325491E80A78300F289EA /* SelfStat_TableViewCell.swift in Sources */,
 				9AC3020C1E7B89F600F26E1D /* Counts_TableViewCell.swift in Sources */,
 				9A6F62E01E7F9BD600276684 /* NameViewController.swift in Sources */,
 				9A6F62E21E7F9F8B00276684 /* Attendee_TableViewCell.swift in Sources */,
@@ -529,7 +530,6 @@
 				9A11953B1E8038B100D76A3D /* Extension.swift in Sources */,
 				9A5FB7D11E7C7F790021B7D5 /* Match_TableViewCell.swift in Sources */,
 				9A6B3C5C1E5EA2C400A3E5AC /* AppDelegate.swift in Sources */,
-				9A6F62E81E7FAD0600276684 /* Checkin_TableViewCell.swift in Sources */,
 				9A6F62D81E7F86FA00276684 /* StatsViewController.swift in Sources */,
 				9A6B3C8A1E5EACAE00A3E5AC /* GradientView.swift in Sources */,
 				9A6F62DE1E7F9BB400276684 /* FoundViewController.swift in Sources */,

@@ -28,6 +28,7 @@ class NameViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
 
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         print(textField.text)
@@ -40,12 +41,15 @@ class NameViewController: UIViewController, UITextFieldDelegate {
 
         } else {
             let userName  = User(context: managedObjectContext)
-            userName.name = self.name.text
+            userName.name = textField.text
+            
+            // Save the data to coredata
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
             
             let alert = UIAlertController(title: "Permanent Name", message: "Please make sure this is the name you want to identified by. You cannot change this later.", preferredStyle: UIAlertControllerStyle.alert)
             
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-            alert.addAction(UIAlertAction(title: "This is good", style: UIAlertActionStyle.destructive, handler: {(alert: UIAlertAction!) in         self.performSegue(withIdentifier: "gotokey", sender: self)
+            alert.addAction(UIAlertAction(title: "This is good", style: UIAlertActionStyle.destructive, handler: {(alert: UIAlertAction!) in         self.gotokey()
                 
             }))
             self.present(alert, animated: true, completion: nil)
@@ -53,6 +57,12 @@ class NameViewController: UIViewController, UITextFieldDelegate {
         }
         
         return true
+    }
+    
+    func gotokey() {
+        // Save the data to coredata
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        self.performSegue(withIdentifier: "gotokey", sender: self)
     }
 
 }
