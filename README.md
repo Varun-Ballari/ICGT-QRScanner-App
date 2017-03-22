@@ -8,6 +8,8 @@ Used by ICGT Checkin members, this app will allows them to see the stats of the 
 
 ### Pods and Framewords
 * `CoreData`
+* `AVFoundation`
+* `AVCapture`
 * `Pulley`
 * `Pager`
 * `Alamofire`
@@ -18,8 +20,10 @@ Used by ICGT Checkin members, this app will allows them to see the stats of the 
 - ICGT Board Members will have access to event and personal statistics
 - System will be easily transportable, without the need of computers and laptops
 
-### Details
+### Details About Features
 - This app uses Core Data to create sessions in which the member's name will be remembered and won't be asked every time. However the pass key will always be asked just as a precautionary measure.
+- AVFoundation and AVCapture are used to recognize and scan QR codes
+- AudioToolbox.AudioServices is used to vibrate the phone when a code is recognized
 - Pulley allows the iOS Pull Up View Controller effect used in the iOS Maps App
 - Pager allows for a ScrollView 3 Page Effect used in Snapchat
 - Alamofire and SwiftyJSON are used for get/post requests and for parsing through returned data
