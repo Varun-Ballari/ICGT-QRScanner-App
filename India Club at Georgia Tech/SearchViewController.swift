@@ -35,7 +35,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
             if let jsondata = response.result.value {
                 let json = JSON(jsondata)
-//                print(json)
                 
                 self.matchTable.removeAll()
                 for i in 0..<json.count {
@@ -43,10 +42,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     let name = json[i]["name"]
                     let ticketid = json[i]["ticketid"]
                     
-                    
                     self.matchTable.append([String(describing: ticketid), String(describing: name), String(describing: gtid)])
-                    print(self.matchTable)
-                    
                 }
             }
             self.table.reloadData()
@@ -65,7 +61,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Detected Code"), object: nil, userInfo: ["qrResult" : self.matchTable[indexPath.row][0]])
-//        print(self.matchTable[indexPath.row][0])
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,7 +78,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        getMatches(searchString: searchText)
+        // database stalling occuring. search only on text
+        //getMatches(searchString: searchText)
         
     }
     
@@ -97,6 +93,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchBar.resignFirstResponder()
     }
     
+    
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
@@ -104,6 +102,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchbar.resignFirstResponder()
+        getMatches(searchString: searchBar.text!)
+
 
     }
     

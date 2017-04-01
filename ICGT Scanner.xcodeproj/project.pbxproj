@@ -15,7 +15,6 @@
 		9A1195601E80453500D76A3D /* UserModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A11953C1E80413100D76A3D /* UserModel.xcdatamodeld */; };
 		9A1195611E80453700D76A3D /* UserModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A11953C1E80413100D76A3D /* UserModel.xcdatamodeld */; };
 		9A1195621E80453700D76A3D /* UserModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9A11953C1E80413100D76A3D /* UserModel.xcdatamodeld */; };
-		9A26A41C1E6514E4003E5C95 /* URLStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A26A41B1E6514E4003E5C95 /* URLStruct.swift */; };
 		9A5FB7D11E7C7F790021B7D5 /* Match_TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A5FB7D01E7C7F790021B7D5 /* Match_TableViewCell.swift */; };
 		9A6B3C5C1E5EA2C400A3E5AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B3C5B1E5EA2C400A3E5AC /* AppDelegate.swift */; };
 		9A6B3C5E1E5EA2C400A3E5AC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B3C5D1E5EA2C400A3E5AC /* LoginViewController.swift */; };
@@ -64,7 +63,6 @@
 		9A0E22AF1E5FCB57008723E3 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		9A11953A1E8038B100D76A3D /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		9A11953D1E80413100D76A3D /* UserModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserModel.xcdatamodel; sourceTree = "<group>"; };
-		9A26A41B1E6514E4003E5C95 /* URLStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLStruct.swift; sourceTree = "<group>"; };
 		9A5FB7D01E7C7F790021B7D5 /* Match_TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match_TableViewCell.swift; sourceTree = "<group>"; };
 		9A6B3C581E5EA2C400A3E5AC /* ICGT Scanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ICGT Scanner.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6B3C5B1E5EA2C400A3E5AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -166,7 +164,6 @@
 				9A6F62D31E7F3DAD00276684 /* PagerUIViewController.swift */,
 				9A6F62DA1E7F9B7400276684 /* Pager View Controllers */,
 				9A6F62D91E7F9B2A00276684 /* TableView Cells */,
-				9A26A41B1E6514E4003E5C95 /* URLStruct.swift */,
 				9A11953A1E8038B100D76A3D /* Extension.swift */,
 				9A6B3C891E5EACAE00A3E5AC /* GradientView.swift */,
 				9A11953C1E80413100D76A3D /* UserModel.xcdatamodeld */,
@@ -516,7 +513,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A6F62D41E7F3DAD00276684 /* PagerUIViewController.swift in Sources */,
-				9A26A41C1E6514E4003E5C95 /* URLStruct.swift in Sources */,
 				9ABB371E1E663CD50077E951 /* SearchViewController.swift in Sources */,
 				9A6F62E61E7FA1D600276684 /* Button_TableViewCell.swift in Sources */,
 				9AD325491E80A78300F289EA /* SelfStat_TableViewCell.swift in Sources */,
@@ -690,9 +686,10 @@
 				DEVELOPMENT_TEAM = E7386Y6UWH;
 				INFOPLIST_FILE = "India Club at Georgia Tech/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Varun-Ballari.India-Club-at-Georgia-Tech";
+				PRODUCT_BUNDLE_IDENTIFIER = "Varun-Ballari.ICGT-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -704,9 +701,10 @@
 				DEVELOPMENT_TEAM = E7386Y6UWH;
 				INFOPLIST_FILE = "India Club at Georgia Tech/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Varun-Ballari.India-Club-at-Georgia-Tech";
+				PRODUCT_BUNDLE_IDENTIFIER = "Varun-Ballari.ICGT-Scanner";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

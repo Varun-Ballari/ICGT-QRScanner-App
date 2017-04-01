@@ -27,12 +27,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let people = try managedContext.fetch(fetchRequest)
             
             if people.count == 0 {
-                print("Nothing here")
+                // print("Nothing here")
                 let initialViewController: NameViewController = mainStoryboard.instantiateViewController(withIdentifier: "nameVC") as! NameViewController
                 self.window?.rootViewController = initialViewController
 
             } else {
-                print("Found: \(people.count)")
+                // print("Found: \(people.count)")
                 let initialViewController: LoginViewController = mainStoryboard.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
             
                 self.window?.rootViewController = initialViewController

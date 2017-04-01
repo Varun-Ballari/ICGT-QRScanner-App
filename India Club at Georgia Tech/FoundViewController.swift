@@ -17,11 +17,14 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     var ticketDataTypes = ["Ticket ID", "GTID", "Status", "Group"]
     var ticketData = ["", "", "", ""]
+    
+    var holishowSpecific = ["Holi Show", "After Party"]
 
     var buttonsTitles = ["", ""]
     var buttonTypes = [false, false]
+    var buttonColors = [UIColor.init(rgb: 0xF95358, alpha: 1.0), UIColor.init(rgb: 0xF95358, alpha: 1.0)]
     
-    var found : Bool = true
+    var found : Bool = false
     
     @IBOutlet var table: UITableView!
     
@@ -79,7 +82,6 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        print(indexPath.section, indexPath.row)
         if found {
             if indexPath.section == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "attendee", for: indexPath) as! Attendee_TableViewCell
@@ -105,16 +107,16 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
             
                 if self.buttonTypes[indexPath.row] {
-                    cell.cellButton.layer.borderColor = UIColor.init(rgb: 0x4898FA, alpha: 1.0).cgColor
-                    cell.cellButton.backgroundColor = UIColor.init(rgb: 0x4898FA, alpha: 1.0)
+                    cell.cellButton.layer.borderColor = self.buttonColors[indexPath.row].cgColor
+                    cell.cellButton.backgroundColor = self.buttonColors[indexPath.row]
                     cell.cellButton.isEnabled = true
                     cell.cellButton.setTitleColor(UIColor.init(rgb: 0xFFFFFF, alpha: 1.0), for: .normal)
                 
                 } else {
-                    cell.cellButton.layer.borderColor = UIColor.init(rgb: 0xF95358, alpha: 1.0).cgColor
+                    cell.cellButton.layer.borderColor = self.buttonColors[indexPath.row].cgColor
                     cell.cellButton.backgroundColor = UIColor.clear
                     cell.cellButton.isEnabled = false
-                    cell.cellButton.setTitleColor(UIColor.init(rgb: 0xF95358, alpha: 1.0), for: .normal)
+                    cell.cellButton.setTitleColor(self.buttonColors[indexPath.row], for: .normal)
                 }
 
                 
@@ -126,17 +128,7 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return cell
         }
     }
-    
-    func buttonPressed(button: UIButton) {
-        if button.isEnabled {
-            print("You have clicked \(button.tag)")
-            print(button.titleLabel?.text)
-        } else {
-            
-        }
-        print("You have clicked \(button.tag)")
-        print(button.titleLabel?.text)
-    }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if found {
@@ -155,7 +147,7 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func checkDB(notification: Notification) {
         guard let query = notification.userInfo!["qrResult"] else { return }
-        print(query)
+//        print(query)
         
         let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/search?query=" + (query as! String)
         Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
@@ -182,28 +174,32 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     for i in 0..<json[0]["comingto"].count {
                         if (json[0]["comingto"][i] == false) {
                             // not coming to part i
-                            self.buttonsTitles[i] = "Not registered for Part " + String(i)
+                            self.buttonsTitles[i] = "Not registered for " + self.holishowSpecific[i] //String(i)
                             self.buttonTypes[i] = false
+                            self.buttonColors[i] = UIColor.init(rgb: 0xF95358, alpha: 1.0)
                         } else {
                             // coming to part i
                             if (json[0]["checkinby"][i] == nil) {
                                 // not checked in
-                                self.buttonsTitles[i] = "Check In for Part " + String(i)
+                                self.buttonsTitles[i] = "Check Into " + self.holishowSpecific[i]  //String(i)
                                 self.buttonTypes[i] = true
+                                self.buttonColors[i] = UIColor.init(rgb: 0x157BFB, alpha: 1.0)
+
                                 
                             } else {
                                 // checked in already
                                 self.buttonsTitles[i] = "Already Checked in by " + String(describing: json[0]["checkinby"][i]).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                                 self.buttonTypes[i] = false
+                                self.buttonColors[i] = UIColor.init(rgb: 0x1DBD67, alpha: 1.0)
+
                             }
                         }
                     }
-                    print(json)
+//                    print(json)
                 
                 } else {
                     self.found = false
                 }
-                
                 self.table.reloadData()
             }
         }
@@ -212,37 +208,51 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func postRequest(button: UIButton) {
         
-        let icgtposturl: String = "https://tickets.gtindiaclub.com/api/checkin"
+        let icgtposturl: String = "https://tickets.gtindiaclub.com/api/checkin/ios"
 
-        
-        let params: Parameters = [
-            "day": button.tag,
-            "ticketId": Int(ticketData[0]),
-            "staff": String(describing: user[0].name!)
-        ]
-        
-        Alamofire.request(icgtposturl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: nil)
-            .responseJSON { response in
-            if let jsondata = response.result.value {
-                let json = JSON(jsondata)
+        if let tid = Int(ticketData[0]) {
+            let params: Parameters = [
+                "day": button.tag,
+                "ticketId": tid,
+                "staff": String(describing: user[0].name!)
+            ]
+            
+            Alamofire.request(icgtposturl, method: .post, parameters: params, encoding: JSONEncoding.default, headers: nil)
+                .responseJSON { response in
                     
+//                    print(response.request!)  // original URL request
+//                    print(response.response!) // HTTP URL response
+//                    print(response.data!)     // server data
+//                    print(response.result)   // result of response serialization
                     
-                if json["success"] == true {
-                    button.setTitle("Checked In", for: .disabled)
-                    self.table.reloadData()
-                    print("Successfully Checked In")
-                } else {
-                    let alert = UIAlertController(title: "Error!", message: "Something went terribly wrong. Contact VP IT immediately." + String(describing: json["error"]), preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
+                    if let jsondata = response.result.value {
+                        let json = JSON(jsondata)
+                        
+                        if json["success"] == true {
+                            
+                            UIView.animate(withDuration: 0.3, animations: {
+                                button.layer.borderColor = UIColor.init(rgb: 0x1DBD67, alpha: 1.0).cgColor
+                                button.backgroundColor = UIColor.clear
+                                button.isEnabled = false
+                                button.setTitleColor(UIColor.init(rgb: 0x1DBD67, alpha: 1.0), for: .normal)
+                                button.setTitle("Checked In by You", for: .disabled)
+
+                            
+                            }, completion: { (success) in
+                                // print("Successfully Checked In")
+
+                            })
+                            
+//                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Detected Code"), object: nil, userInfo: ["qrResult" : tid])
+                            
+                        } else {
+                            let alert = UIAlertController(title: "Error!", message: String(describing: json["error"]), preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
             }
         }
     }
 }
 
-
-//            print(response.request)  // original URL request
-//            print(response.response) // HTTP URL response
-//            print(response.data)     // server data
-//            print(response.result)   // result of response serialization

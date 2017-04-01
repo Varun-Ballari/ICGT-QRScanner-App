@@ -38,7 +38,7 @@ class PagerUIViewController: PagerController, PagerDataSource {
     func customizeTab() {
         indicatorColor = UIColor.black
         tabsViewBackgroundColor = UIColor.init(rgb: 0xF7F6F2, alpha: 1)
-//        contentViewBackgroundColor = UIColor.gray.withAlphaComponent(0.32)
+        contentViewBackgroundColor = UIColor.init(rgb: 0xF7F6F4, alpha: 1.0)
         
         startFromSecondTab = false
         centerCurrentTab = true

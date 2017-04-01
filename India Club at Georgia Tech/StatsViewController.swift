@@ -43,10 +43,27 @@ class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         table.delegate = self
         table.dataSource = self
         
+        self.table.addSubview(self.refreshControl)
+        
         getCounts()
-        scheduledTimerWithTimeInterval()
+        
+        // hitting DB too many times
+        //scheduledTimerWithTimeInterval()
 
 
+    }
+
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        
+        return refreshControl
+    }()
+    
+
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        getCounts()
+        refreshControl.endRefreshing()
     }
 
     override func didReceiveMemoryWarning() {
@@ -135,10 +152,6 @@ class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             return 44
         } else {
             return 150
-            
         }
     }
-
-
-    
 }

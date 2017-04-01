@@ -117,7 +117,7 @@ class QRCodeScannerViewController: UIViewController, AVCaptureMetadataOutputObje
             if metadataObj.stringValue != nil {
                 qrResult = metadataObj.stringValue
                 
-                print(qrResult)
+                // print(qrResult)
                 captureSession?.stopRunning()
                 AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                 AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)

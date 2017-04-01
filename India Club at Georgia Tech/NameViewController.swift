@@ -31,7 +31,7 @@ class NameViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        print(textField.text)
+        // print(textField.text)
         
         if textField.text == "" {
             let alert = UIAlertController(title: "Incorrect Format", message: "Please enter a valid name.", preferredStyle: UIAlertControllerStyle.alert)
