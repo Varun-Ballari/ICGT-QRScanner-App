@@ -149,7 +149,8 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
         guard let query = notification.userInfo!["qrResult"] else { return }
 //        print(query)
         
-        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/search?query=" + (query as! String)
+        // search url not included for security purposes
+        let icgtsearchurl: String = ""
         Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
             if let jsondata = response.result.value {
                 let json = JSON(jsondata)
@@ -208,7 +209,8 @@ class FoundViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func postRequest(button: UIButton) {
         
-        let icgtposturl: String = "https://tickets.gtindiaclub.com/api/checkin/ios"
+        // post url not included for security purposes
+        let icgtposturl: String = ""
 
         if let tid = Int(ticketData[0]) {
             let params: Parameters = [

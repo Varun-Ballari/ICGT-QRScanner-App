@@ -128,7 +128,9 @@ class LoginViewController: UIViewController {
         
         
         if numNums == 6 {
-            let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/ios?key=" + secretKey
+            
+            // search url not included for security purposes
+            let icgtsearchurl: String = ""
             
             Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
                 if let jsondata = response.result.value {

@@ -30,7 +30,9 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getMatches(searchString: String) {
-        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/search?query=" + searchString
+        
+        // search url not included for security purposes
+        let icgtsearchurl: String = ""
         
         Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
             if let jsondata = response.result.value {
@@ -79,7 +81,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // database stalling occuring. search only on text
-        //getMatches(searchString: searchText)
+        // getMatches(searchString: searchText)
         
     }
     

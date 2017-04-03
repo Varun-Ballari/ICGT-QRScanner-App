@@ -48,7 +48,7 @@ class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         getCounts()
         
         // hitting DB too many times
-        //scheduledTimerWithTimeInterval()
+        // scheduledTimerWithTimeInterval()
 
 
     }
@@ -71,7 +71,10 @@ class StatsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     func getCounts() {
-        let icgtsearchurl: String = "https://tickets.gtindiaclub.com/api/checkin/counts?user=" + String(describing: user[0].name!)
+        
+        // search url not included for security purposes
+        let icgtsearchurl: String = ""
+        
         Alamofire.request(icgtsearchurl, method: .get).responseJSON { response in
             if let jsondata = response.result.value {
                 let json = JSON(jsondata)
